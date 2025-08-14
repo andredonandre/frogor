@@ -86,7 +86,14 @@ WSGI_APPLICATION = 'Frogor.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    "default": {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'frogor_db',
+        'USER': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }

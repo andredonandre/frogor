@@ -1,9 +1,47 @@
 import Image from "next/image";
+import {DM_Serif_Display } from "next/font/google";
+import { Accordion } from "@/components/ui/accordion";
+import {CustomComponent} from "@/components/comp-339";
 
-export default function Home() {
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  variable: "--font-dm-serif-display",
+  weight: "400" ,
+});
+
+type Faq = {
+  id: number;
+  question: string;
+  answer: string;
+};
+
+async function getData(): Promise<Faq[]> {
+   const res = await fetch("http://127.0.0.1:8000/api/faq/");
+   if (!res.ok) {
+     throw new Error("Failed to fetch data");
+   }
+    return res.json();
+}
+
+export default async function Home() {
+const data = await getData();
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+      
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <h1 className={'text-4xl ${dmSerifDisplay.className}'}>Welcome to Frogor</h1>
+      <div>
+        <CustomComponent />
+      </div>
+      <ul className="font-sans list-disc list-inside text-lg">
+        {
+         data.map((faq) => (
+          <li key={faq.id} className="mb-2">
+            <strong>{faq.question}</strong>: {faq.answer}
+          </li>
+         ))
+        }
+        </ul>
         <Image
           className="dark:invert"
           src="/next.svg"

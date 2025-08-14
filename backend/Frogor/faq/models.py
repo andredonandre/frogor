@@ -10,3 +10,8 @@ class Faq(models.Model):
     tags = ArrayField(models.CharField(max_length=200), blank=True)   
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = 'faq'
+        verbose_name_plural = 'faqs'
+        db_table = 'faq'
+        
